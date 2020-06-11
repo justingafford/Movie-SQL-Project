@@ -325,7 +325,14 @@ public class Ticketmaster{
 	}
 	
 	public static void CancelPendingBookings(Ticketmaster esql){//4
-		
+		try {
+			String query = String.format("SQL statement that's to be inserted here is commented below")
+			// DELETE FROM BOOKING
+			// WHERE status = "pending"
+			esq1.executeQueryAndPrintResult(query);
+		}catch(Exception e) {
+			System.err.println(e.getMessage());
+		}
 	}
 	
 	public static void ChangeSeatsForBooking(Ticketmaster esql) throws Exception{//5
@@ -337,41 +344,109 @@ public class Ticketmaster{
 	}
 	
 	public static void ClearCancelledBookings(Ticketmaster esql){//7
-		
+		try {
+			String query = "SQL statement that's to be inserted here is commented below"
+			// DELETE FROM BOOKING
+			// WHERE status = "cancelled"
+			int count = esq1.executeQueryAndPrintResult(query);
+		}catch(Exception e) {
+			System.err.println(e.getMessage());
+		}
 	}
 	
 	public static void RemoveShowsOnDate(Ticketmaster esql){//8
-		
+		//I need help on this one
 	}
 	
 	public static void ListTheatersPlayingShow(Ticketmaster esql){//9
 		//
+		try {
+			System.out.print("Please enter in the cinema ID: ");
+			String cinID = in.readLine();
+			System.out.print("Please enter in show ID: ");
+			String showID = in.readLine();
+			String query = String.format("SQL statement that's to be inserted here is commented below")
+			// SELECT T.theaterName
+			// FROM played_in P, Cinema_Theather T, Cinema C, Show S
+			// WHERE T.cinemaID = C.cinemaID
+			// AND C.cinemaID = %s
+			// AND S.showID = %s
+			// AND P.showID = S.showID
+			// AND P.cinemaTheatherID = T.cinemaTheatherID
+			//,cinID, showID);
+			int count = esq1.executeQueryAndPrintResult(query);
+			System.out.println("total amount of theathers: " + count);
+		}catch(Exception e) {
+			System.err.println(e.getMessage());
+		}
 		
 	}
 	
 	public static void ListShowsStartingOnTimeAndDate(Ticketmaster esql){//10
 		//
-		
+		try{
+			System.out.print("Please enter in the starting time: ");
+			String stime = in.readLine();
+			System.out.print("Please enter in the date: ");
+			String sdate = in.readLine();
+			String query = String.format("SQL statement that's to be inserted here is commented below")
+			// SELECT S.showID
+			// FROM Show S
+			// WHERE S.startTime = %s
+			// AND S.date = %s
+			//,stime,sdate);
+			int count = esq1.executeQueryAndPrintResult(query);
+			System.out.println("total amount of shows: " + count);
+		}catch(Exception e) {
+			System.err.println(e.getMessage());
+		}
 	}
 
 	public static void ListMovieTitlesContainingLoveReleasedAfter2010(Ticketmaster esql){//11
-		//
+		//I need help on this one
 		
 	}
 
 	public static void ListUsersWithPendingBooking(Ticketmaster esql){//12
 		//
-		
+		try {
+			String query = String.format("SQL statement that's to be inserted here is commented below")
+			// SELECT U.firstName, U.lastName, U.email
+			// FROM UserAccount U, Booking B
+			// WHERE U.email = B.email
+			// AND B.status = "pending"
+			int count = esq1.executeQueryAndPrintResult(query);
+			System.out.println("total amount of users: " + count);
+		}catch(Exception e) {
+			System.err.println(e.getMessage());
+		}
 	}
 
 	public static void ListMovieAndShowInfoAtCinemaInDateRange(Ticketmaster esql){//13
-		//
+		//I need help with this one
 		
 	}
 
 	public static void ListBookingInfoForUser(Ticketmaster esql){//14
 		//
-		
+		//
+		try{
+			System.out.print("Please enter the user's email: ");
+			String uemail = in.readLine();
+			String query = String.format("SQL statement that's to be inserted here is commented below")
+			// SELECT M.title, S.date, S.startTime, T.theatherName, SS.cinemaSeatID
+			// FROM Movie M, Show S, Cinema_Theather T, Show_Seating SS, UserAccount U, Booking B
+			// WHERE U.email = %s
+			// AND B.email = U.email
+			// AND B.showID = S.showID
+			// AND B.showSeatID = SS.showSeatID
+			// AND S.movieID = M.movieID
+			// ,uemail)
+			int count = esq1.executeQueryAndPrintResult(query);
+			System.out.println("total amount of results: " + count);
+		}catch(Exception e) {
+			System.err.println(e.getMessage());
+		}		
 	}
 	
 }
