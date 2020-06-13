@@ -326,9 +326,12 @@ public class Ticketmaster{
 	
 	public static void CancelPendingBookings(Ticketmaster esql){//4
 		try {
-			String query = String.format("SQL statement that's to be inserted here is commented below")
+			String pstatus = "pending"
+			String query = String.format("DELETE FROM BOOKING WHERE status = %s", pstatus)
+			// here is the sql statement in the () above
 			// DELETE FROM BOOKING
-			// WHERE status = "pending"
+			// WHERE status = %s
+			//,pstatus)
 			esq1.executeQueryAndPrintResult(query);
 		}catch(Exception e) {
 			System.err.println(e.getMessage());
@@ -345,9 +348,12 @@ public class Ticketmaster{
 	
 	public static void ClearCancelledBookings(Ticketmaster esql){//7
 		try {
-			String query = "SQL statement that's to be inserted here is commented below"
+			String cstatus = "cancelled"
+			String query = String.format("DELETE FROM BOOKING WHERE status = %s", cstatus)
+			// here is the sql statement in the () above
 			// DELETE FROM BOOKING
-			// WHERE status = "cancelled"
+			// WHERE status = %s
+			// ,cstatus)
 			int count = esq1.executeQueryAndPrintResult(query);
 		}catch(Exception e) {
 			System.err.println(e.getMessage());
@@ -365,7 +371,8 @@ public class Ticketmaster{
 			String cinID = in.readLine();
 			System.out.print("Please enter in show ID: ");
 			String showID = in.readLine();
-			String query = String.format("SQL statement that's to be inserted here is commented below")
+			String query = String.format("SELECT T.theaterName FROM played_in P, Cinema_Theather T, Cinema C, Show S WHERE T.cinemaID = C.cinemaID AND C.cinemaID = %s AND S.showID = %s AND P.showID = S.showID AND P.cinemaTheatherID = T.cinemaTheatherID", cinID, showID))
+			// here is the sql statement in the () above
 			// SELECT T.theaterName
 			// FROM played_in P, Cinema_Theather T, Cinema C, Show S
 			// WHERE T.cinemaID = C.cinemaID
@@ -389,7 +396,8 @@ public class Ticketmaster{
 			String stime = in.readLine();
 			System.out.print("Please enter in the date: ");
 			String sdate = in.readLine();
-			String query = String.format("SQL statement that's to be inserted here is commented below")
+			String query = String.format("SELECT S.showID FROM Show S WHERE S.startTime = %s AND S.date = %s", stime, sdate)
+			// here is the sql statement in the () above
 			// SELECT S.showID
 			// FROM Show S
 			// WHERE S.startTime = %s
@@ -410,11 +418,14 @@ public class Ticketmaster{
 	public static void ListUsersWithPendingBooking(Ticketmaster esql){//12
 		//
 		try {
-			String query = String.format("SQL statement that's to be inserted here is commented below")
+			String pstatus = "pending"
+			String query = String.format("SELECT U.firstName, U.lastName, U.email FROM UserAccount U, Booking B WHERE U.email = B.email AND B.status = %s", pstatus)
+			// here is the sql statement in the () above
 			// SELECT U.firstName, U.lastName, U.email
 			// FROM UserAccount U, Booking B
 			// WHERE U.email = B.email
-			// AND B.status = "pending"
+			// AND B.status = %s
+			//,pstatus)
 			int count = esq1.executeQueryAndPrintResult(query);
 			System.out.println("total amount of users: " + count);
 		}catch(Exception e) {
@@ -433,7 +444,8 @@ public class Ticketmaster{
 		try{
 			System.out.print("Please enter the user's email: ");
 			String uemail = in.readLine();
-			String query = String.format("SQL statement that's to be inserted here is commented below")
+			String query = String.format("SELECT M.title, S.date, S.startTime, T.theatherName, SS.cinemaSeatID FROM Movie M, Show S, Cinema_Theather T, Show_Seating SS, UserAccount U, Booking B WHERE U.email = %s AND B.email = U.email AND B.showID = S.showID AND B.showSeatID = SS.showSeatID AND S.movieID = M.movieID", uemail)
+			// here is the sql statement in the () above
 			// SELECT M.title, S.date, S.startTime, T.theatherName, SS.cinemaSeatID
 			// FROM Movie M, Show S, Cinema_Theather T, Show_Seating SS, UserAccount U, Booking B
 			// WHERE U.email = %s
