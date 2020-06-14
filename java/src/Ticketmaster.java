@@ -635,7 +635,7 @@ public class Ticketmaster{
 			String newSeat = in.readLine();
 		String query = String.format("UPDATE ShowSeats SET ssid= %s WHERE ssid  = %s AND bid = bID", newSeat, oldSeat, bID);
 			// here is the sql statement in the () above
-			// "UPDATE Bookings
+			// "UPDATE ShowSeats
 			// SET ssid = %s
 			// WHERE ssid  = %s
 			// AND bid = bID
@@ -644,6 +644,15 @@ public class Ticketmaster{
 		}catch(Exception e) {
 			System.err.println(e.getMessage());
 		}
+		//Because the current implementation of this function doesn't check if the seats are unique, I tried to come up with another solution:
+		// UPDATE ShowSeats
+		// SET S1.ssid = S2.ssid <= potential error?
+		// FROM ShowSeats S1, ShowSeats S2
+		// WHERE S1.ssid = %s AND S2.ssid = %s
+		// AND S1.bid = %s AND S1.price = S2.price
+		// AND UNIQUE(S1.sid, S2.ssid)
+		// , oldSeat, newSeat, bID)
+		// However, I am less certain this implementation will work as I don't know if line 2(marked with arrow)is valid.
 	}
 
 	public static void RemovePayment(Ticketmaster esql){//6
