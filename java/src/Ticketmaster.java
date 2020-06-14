@@ -208,12 +208,12 @@ public class Ticketmaster{
 	 * @param args the command line arguments this inclues the <mysql|pgsql> <login file>
 	 */
 	public static void main (String[] args) {
-		// if (args.length != 3) {
-		// 	System.err.println (
-		// 		"Usage: " + "java [-classpath <classpath>] " + Ticketmaster.class.getName () +
-		//             " <dbname> <port> <user>");
-		// 	return;
-		// }//end if
+		if (args.length != 3) {
+			System.err.println (
+				"Usage: " + "java [-classpath <classpath>] " + Ticketmaster.class.getName () +
+		            " <dbname> <port> <user>");
+			return;
+		}//end if
 
 		Ticketmaster esql = null;
 
@@ -230,13 +230,11 @@ public class Ticketmaster{
 			}
 
 			System.out.println("(2)");
-			// String dbname = args[0];
-			// String dbport = args[1];
-			// String user = args[2];
+			String dbname = args[0];
+			String dbport = args[1];
+			String user = args[2];
 
-			String dbname = "rwils006_db";
-			String dbport = "45851";
-			String user = "rwils006";
+
 
 			esql = new Ticketmaster (dbname, dbport, user, "");
 
@@ -613,7 +611,7 @@ public class Ticketmaster{
 
 	public static void CancelPendingBookings(Ticketmaster esql){//4
 		try {
-			String pstatus = "'pending'";
+			String pstatus = "'Pending'";
 			String query = String.format("DELETE FROM Bookings WHERE status = %s", pstatus);
 			// here is the sql statement in the () above
 			// DELETE FROM Booking
@@ -627,23 +625,24 @@ public class Ticketmaster{
 
 	public static void ChangeSeatsForBooking(Ticketmaster esql) throws Exception{//5
 		try{
-		System.out.print("Pleaser enter the booking ID with the seating you wish to change: ");
-			String bID = in.readLine();
-		System.out.print("Please enter the seat ID of the seat that you want to change: ");
-			String oldSeat = in.readLine();
-		System.out.print("Please enter the seat ID of the new seat that you want to change to: ");
-			String newSeat = in.readLine();
-		String query = String.format("UPDATE ShowSeats SET ssid= %s WHERE ssid  = %s AND bid = bID", newSeat, oldSeat, bID);
-			// here is the sql statement in the () above
-			// "UPDATE ShowSeats
-			// SET ssid = %s
-			// WHERE ssid  = %s
-			// AND bid = bID
-			// , newSeat, oldSeat, bID)
-		count = esql.executeQueryAndPrintResult(query1);
-		}catch(Exception e) {
-			System.err.println(e.getMessage());
-		}
+			System.out.print("Pleaser enter the booking ID with the seating you wish to change: ");
+				String bID = in.readLine();
+			System.out.print("Please enter the seat ID of the seat that you want to change: ");
+				String oldSeat = in.readLine();
+			System.out.print("Please enter the seat ID of the new seat that you want to change to: ");
+				String newSeat = in.readLine();
+			String query = String.format("UPDATE ShowSeats SET ssid= %s WHERE ssid  = %s AND bid = bID", newSeat, oldSeat, bID);
+				// here is the sql statement in the () above
+				// "UPDATE ShowSeats
+				// SET ssid = %s
+				// WHERE ssid  = %s
+				// AND bid = bID
+				// , newSeat, oldSeat, bID)
+			int count = esql.executeQueryAndPrintResult(query);
+			}catch(Exception e) {
+				System.err.println(e.getMessage());
+			}
+
 		//Because the current implementation of this function doesn't check if the seats are unique, I tried to come up with another solution:
 		// UPDATE ShowSeats
 		// SET S1.ssid = S2.ssid <= potential error?
@@ -685,13 +684,13 @@ public class Ticketmaster{
 
 	public static void ClearCancelledBookings(Ticketmaster esql){//7
 		try {
-			String cstatus = "'cancelled'";
+			String cstatus = "'Cancelled'";
 			String query = String.format("DELETE FROM Bookings WHERE status = %s", cstatus);
 			// here is the sql statement in the () above
-			// DELETE FROM Bookings
+			// DELETE FROM Booking
 			// WHERE status = %s
 			// ,cstatus)
-			int count = esql.executeQueryAndPrintResult(query);
+			esql.executeUpdate(query);
 		}catch(Exception e) {
 			System.err.println(e.getMessage());
 		}
