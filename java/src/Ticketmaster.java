@@ -633,12 +633,12 @@ public class Ticketmaster{
 			String oldSeat = in.readLine();
 		System.out.print("Please enter the seat ID of the new seat that you want to change to: ");
 			String newSeat = in.readLine();
-		String query = String.format("UPDATE Bookings SET showSeatID = %s WHERE showSeatID  = %s AND bookingID = bID", newSeat, oldSeat, bID);
+		String query = String.format("UPDATE ShowSeats SET ssid= %s WHERE ssid  = %s AND bid = bID", newSeat, oldSeat, bID);
 			// here is the sql statement in the () above
 			// "UPDATE Bookings
-			// SET showSeatID = %s
-			// WHERE showSeatID  = %s
-			// AND bookingID = bID
+			// SET ssid = %s
+			// WHERE ssid  = %s
+			// AND bid = bID
 			// , newSeat, oldSeat, bID)
 		count = esql.executeQueryAndPrintResult(query1);
 		}catch(Exception e) {
